@@ -295,7 +295,7 @@ app.get('/mongo/restart', function(req, res) {
 
 
 
-var dockerComposeStart = function(serviceName, stdOutAlt=null, stdErrAlt=null, exitAlt=null) {
+var dockerComposeStart = function(serviceName, stdOutAlt, stdErrAlt, exitAlt) {
 
 	return new Promise (function (thenCallback, catchCallback) {
 
