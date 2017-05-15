@@ -637,12 +637,12 @@ app.get('/client/api/git/pull', function(req, res) {
 ~~~~~~~~~ */
 app.get('/ms/api/docker/start', function(req, res) {
 
-	 dockerComposeStart('api-builder')
+	 dockerComposeStart('server-api')
 	.then(function(data) {
 
 		res.status(200)
 		   .send({
-		   		message: "kitset_api_builder container started"
+		   		message: "kitset_server_api container started"
 		   });
 	})
 	.catch(function(error) {
@@ -658,11 +658,11 @@ app.get('/ms/api/docker/start', function(req, res) {
 ~~~~~~~~~ */
 app.get('/ms/api/docker/stop', function(req, res) {
 	
-	dockerComposeStop('api-builder')
+	dockerComposeStop('server-api')
 		.then(function(data) {
 			res.status(200)
 			   .send({
-			   		message: "kitset_api_builder container stopped"
+			   		message: "kitset_server_api container stopped"
 			   });
 		})
 		.catch(function(error) {
@@ -678,11 +678,11 @@ app.get('/ms/api/docker/stop', function(req, res) {
 ~~~~~~~~~ */
 app.get('/ms/api/docker/restart', function(req, res) {
 
-	dockerComposeRestart('api-builder')
+	dockerComposeRestart('server-api')
 		.then(function(data) {
 			res.status(200)
 			   .send({
-			   		message: "kitset_api_builder container restarted"
+			   		message: "kitset_server_api container restarted"
 			   });
 		})
 		.catch(function(error) {
