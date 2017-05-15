@@ -50,7 +50,7 @@ app.get('/mysql/stop', function(req, res) {
 		console.log('data', data);
 	},
 	function(error) {
-		console.log("error", err);
+		console.log("error", error);
 	});
 });
 
