@@ -408,149 +408,6 @@ app.get('/db/mongo/docker/restart', function(req, res) {
 
 
 
-/*
-
-	 ____                        _             _           _ 
-	/ ___| _   _ _ __   ___ _ __| | ___   __ _(_) ___ __ _| |
-	\___ \| | | | '_ \ / _ \ '__| |/ _ \ / _` | |/ __/ _` | |
-	 ___) | |_| | |_) |  __/ |  | | (_) | (_| | | (_| (_| | |
-	|____/ \__,_| .__/ \___|_|  |_|\___/ \__, |_|\___\__,_|_|
-	            |_|                      |___/               
-
-*/
-// ======================== Docker ======================== //
-/*	~~~~~~~~~
-
-	Start
-
-~~~~~~~~~ */
-app.get('/client/auth/docker/start', function(req, res) {
-
-	 dockerComposeStart('superlogical')
-	.then(function(data) {
-
-		res.status(200)
-		   .send({
-		   		message: "kitset_superlogical container started"
-		   });
-	})
-	.catch(function(error) {
-		console.log('Something went wrong...', error);
-	});
-
-});
-
-/*	~~~~~~~~~
-
-	Stop
-
-~~~~~~~~~ */
-app.get('/client/auth/docker/stop', function(req, res) {
-	
-	dockerComposeStop('superlogical')
-		.then(function(data) {
-			res.status(200)
-			   .send({
-			   		message: "kitset_superlogical container stopped"
-			   });
-		})
-		.catch(function(error) {
-			console.log('Something went wrong...', error);
-		});
-
-});
-
-/*	~~~~~~~~~
-
-	Restart
-
-~~~~~~~~~ */
-app.get('/client/auth/docker/restart', function(req, res) {
-
-	dockerComposeRestart('superlogical')
-		.then(function(data) {
-			res.status(200)
-			   .send({
-			   		message: "kitset_superlogical container restarted"
-			   });
-		})
-		.catch(function(error) {
-			console.log('Something went wrong...', error);
-		});
-
-});
-
-// ======================== End Docker ======================== //
-// ======================== Git ======================== //
-/*	~~~~~~~~~
-
-	Pull
-
-~~~~~~~~~ */
-app.get('/client/auth/git/pull', function(req, res) {
-
-	var gitPull = exec('cd ~/microservice_superlogical && git pull --all');
-		gitPull.stdout.on('data', function(data) {
-			console.log('stdout: ', data);
-		});
-		gitPull.stderr.on('data', function(data) {
-			console.log('stderr: ', data);
-		});
-		gitPull.on('exit', function(data) {
-			console.log('Exited: ', data);
-			res.status(200)
-			   .send({
-			   		data: data
-			   });
-		});
-});
-
-
-
-// ======================== End Git ======================== //
-// ======================== Artisan ======================== //
-/*	~~~~~~~~~
-
-	Migrate and seed
-
-~~~~~~~~~ */
-app.get('/client/auth/artisan/migrateandseed', function(req, res) {
-
-	var artisanMigrateAndSeed = exec('cd ~/microservice_superlogical && php artisan migrate:refresh --seed');
-		artisanMigrateAndSeed.stdout.on('data', function(data) {
-			console.log('stdout: ', data);
-		});
-		artisanMigrateAndSeed.stderr.on('data', function(data) {
-			console.log('stderr: ', data);
-		});
-		artisanMigrateAndSeed.on('exit', function(data) {
-			console.log('Exited: ', data);
-			res.status(200)
-			   .send({
-			   		data: data
-			   });
-		});
-
-});
-
-
-
-
-// ======================== End artisan ======================== //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -753,6 +610,161 @@ app.get('/client/api/git/pull', function(req, res) {
 
 
 // ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	 ____                        _             _           _ 
+	/ ___| _   _ _ __   ___ _ __| | ___   __ _(_) ___ __ _| |
+	\___ \| | | | '_ \ / _ \ '__| |/ _ \ / _` | |/ __/ _` | |
+	 ___) | |_| | |_) |  __/ |  | | (_) | (_| | | (_| (_| | |
+	|____/ \__,_| .__/ \___|_|  |_|\___/ \__, |_|\___\__,_|_|
+	            |_|                      |___/               
+
+*/
+// ======================== Docker ======================== //
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
+app.get('/ms/auth/docker/start', function(req, res) {
+
+	 dockerComposeStart('superlogical')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "kitset_superlogical container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
+
+});
+
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
+app.get('/ms/auth/docker/stop', function(req, res) {
+	
+	dockerComposeStop('superlogical')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_superlogical container stopped"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
+app.get('/ms/auth/docker/restart', function(req, res) {
+
+	dockerComposeRestart('superlogical')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_superlogical container restarted"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/ms/auth/git/pull', function(req, res) {
+
+	var gitPull = exec('cd ~/microservice_superlogical && git pull --all');
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
+});
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+/*	~~~~~~~~~
+
+	Migrate and seed
+
+~~~~~~~~~ */
+app.get('/ms/auth/artisan/migrateandseed', function(req, res) {
+
+	var artisanMigrateAndSeed = exec('cd ~/microservice_superlogical && php artisan migrate:refresh --seed');
+		artisanMigrateAndSeed.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		artisanMigrateAndSeed.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		artisanMigrateAndSeed.on('exit', function(data) {
+			console.log('Exited: ', data);
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
+
+});
+
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
 
 
 
