@@ -2,8 +2,52 @@
 <html>
 <head>
 	<title></title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-	Main html page
+	<script>
+		
+		var dockerStart = {
+
+			mysql : function() {
+				$.ajax({
+					type: 'GET',
+					url: '/mysql/start',
+					success: function(response) {
+						console.error('My response', response);
+					},
+					error: function(error) { 
+						console.error('my error', error);
+					}
+				})
+			}
+
+		}
+
+		var dockerStop = {
+			mysql : function() {
+				console.error('Stop mysql');
+			}
+		}
+
+		var dockerRestart = {
+			mysql : function() {
+				console.error('Restart mysql');
+			}
+		}
+
+	</script>
+	<h1>Mysql</h1>
+	<button onclick="dockerStart.mysql()">
+		Start
+	</button>
+
+	<button onclick="dockerStop.mysql()">
+		Stop
+	</button>
+
+	<button onclick="dockerRestart.mysql()">
+		Restart
+	</button>
 </body>
 </html>
