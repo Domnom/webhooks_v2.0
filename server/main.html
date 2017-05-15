@@ -73,6 +73,9 @@
 			ms_ui      : function() {
 				ajaxGet('/ms/ui/docker/start');
 			},
+			ms_auth    : function() {
+				ajaxGet('/ms/auth/docker/start');
+			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/start');
 			}
@@ -102,6 +105,9 @@
 			},
 			ms_ui      : function() {
 				ajaxGet('/ms/ui/docker/stop');
+			},
+			ms_auth    : function() {
+				ajaxGet('/ms/auth/docker/stop');
 			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/stop');
@@ -133,6 +139,9 @@
 			ms_ui      : function() {
 				ajaxGet('/ms/ui/docker/restart');
 			},
+			ms_auth    : function() {
+				ajaxGet('/ms/auth/docker/restart');
+			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/restart');
 			}
@@ -158,6 +167,9 @@
 			ms_ui      : function(command) {
 				ajaxGet('/ms/ui/git/' + command);
 			},
+			ms_auth    : function(command) {
+				ajaxGet('/ms/auth/git/' + command);
+			},
 			gateway    : function(command) {
 				ajaxGet('/gateway/git/' + command);
 			}
@@ -173,6 +185,9 @@
 			},
 			ms_ui      : function(command) {
 				ajaxGet('/ms/ui/artisan/' + comamnd);
+			},
+			ms_auth    : function(command) {
+				ajaxGet('/ms/auth/artisan/' + command);
 			},
 			gateway    : function(command) {
 				ajaxGet('/gateway/artisan/' + comamnd);
@@ -201,6 +216,10 @@
 	</script>
 
 
+
+
+
+
 <!-- 
 
 	  ____            _        _                     
@@ -215,6 +234,10 @@
  	<ol id="containerList">
 
  	</ol>
+
+
+
+
 
 
 
@@ -239,6 +262,10 @@
  			Pull
  		</button>
  	</div>
+
+
+
+
 
 
 
@@ -269,6 +296,9 @@
 
 
 
+
+
+
 <!-- 
 
 	 __  __                         
@@ -291,6 +321,13 @@
  	<button onclick="dockerRestart.mongo()">
  		Restart
  	</button>
+
+
+
+
+
+
+
 
 
 
@@ -330,6 +367,51 @@
 			Migrate and seed
 		</button>
 	</div>
+
+
+
+
+
+
+
+
+<!-- 
+
+	 ____                        _             _           _ 
+	/ ___| _   _ _ __   ___ _ __| | ___   __ _(_) ___ __ _| |
+	\___ \| | | | '_ \ / _ \ '__| |/ _ \ / _` | |/ __/ _` | |
+	 ___) | |_| | |_) |  __/ |  | | (_) | (_| | | (_| (_| | |
+	|____/ \__,_| .__/ \___|_|  |_|\___/ \__, |_|\___\__,_|_|
+	            |_|                      |___/               
+
+
+ -->
+	<h3>MS - Auth</h3>
+
+	<div id="ms_auth_docker">
+		<button onclick="dockerStart.ms_auth()">
+			Start
+		</button>
+
+		<button onclick="dockerStop.ms_auth()">
+			Stop
+		</button>
+
+		<button onclick="dockerRestart.ms_auth()">
+			Restart
+		</button>
+	</div>
+	<div id="ms_auth_git">
+		<button onclick="git.ms_auth('pull')">
+			Pull
+		</button>
+	</div>
+	<div id="ms_auth_artisan">
+		<button onclick="git.ms_auth('migrateandseed')">
+			Migrate and seed
+		</button>
+	</div>
+
 
 
 
