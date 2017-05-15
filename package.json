@@ -7,6 +7,8 @@
     "express": "^4.15.2"
   },
   "scripts": {
-    "start": "nodemon server/server.js"
+    "start": "nodemon server/server.js",
+    "startForever": "forever start server/server.js",
+    "stopForever" : "forever stop server/server.js"
   }
 }
