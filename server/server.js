@@ -23,22 +23,26 @@ app.get('/', function(req, res) {
 app.get('/mysql/start', function(req, res) {
 	// exec('cd ~/gateway_nodejs && docker-compose start -d mysql; touch ~/docker-has-started.txt');
 	// res.send('Start mysql');
-	docker.getContainerId("mysql", function(err, id){
-	    if(err) console.log(err);
-	    else{
-	        var container = docker.dockerode.getContainer(id);
-	        container.inspect(function (err, data) {
-	            console.log(data);
-	            res.send('myData', data);
-	        });
-	    }
-	});
+	// docker.getContainerId("mysql", function(err, id){
+	//     if(err) console.log(err);
+	//     else{
+	//         var container = docker.dockerode.getContainer(id);
+	//         container.inspect(function (err, data) {
+	//             console.log(data);
+	//             res.status(200).send('myData', data);
+	//         });
+	//     }
+	// });
 
 });
 
 app.get('/mysql/stop', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose stop mysql');
-	res.send('Stop mysql');
+	docker.kill('mysql', function(data) {
+		console.log('data', data);
+	},
+	function(error) {
+		console.log("error", err);
+	});
 });
 
 app.get('/myql/restart', function(req, res) {
