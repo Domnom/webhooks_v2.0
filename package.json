@@ -4,11 +4,12 @@
   "description": "Webhooks for CI",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "docker-compose-remote-api": "^0.1.4",
     "express": "^4.15.2"
   },
   "scripts": {
     "start": "nodemon server/server.js",
     "startForever": "forever start server/server.js",
-    "stopForever" : "forever stop server/server.js"
+    "stopForever": "forever stop server/server.js"
   }
 }
