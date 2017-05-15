@@ -8,11 +8,18 @@ app.get('/', function(req, res) {
 
 });
 
+// kitset_client_api
+// kitset_gateway
+// kitset_superlogical
+// kitset_server_api
+// kitset_db_mysql
+// kitset_db_mongo
+
+// app.
 
 
 
 
-
-http.listen(1234, function(){
-  console.log('listening on *:1234');
+http.listen(5000, function(){
+  console.log('listening on *:5000');
 });
