@@ -16,7 +16,7 @@ app.get('/', function(req, res) {
 // kitset_db_mongo
 
 app.get('/mysql/start', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose start -d mysql');
+	exec('cd ~/gateway_nodejs && docker-compose start -d mysql && touch ~/docker-has-started.txt');
 	res.send('Start mysql');
 });
 
