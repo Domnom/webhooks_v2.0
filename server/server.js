@@ -176,6 +176,11 @@ app.get('/gateway/git/pull', function(req,res) {
 		});
 		gitPull.on('exit', function(data) {
 			console.log('Exited: ', data);
+
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
 		});
 });
 
@@ -493,6 +498,10 @@ app.get('/client/api/git/pull', function(req, res) {
 		});
 		gitPull.on('exit', function(data) {
 			console.log('Exited: ', data);
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
 		});
 });
 
@@ -701,6 +710,11 @@ app.get('/ms/api/git/pull', function(req, res) {
 		});
 		gitPull.on('exit', function(data) {
 			console.log('Exited: ', data);
+
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
 		});
 });
 
@@ -773,6 +787,11 @@ app.get('/ms/wf/git/pull', function(req, res) {
 		});
 		gitPull.on('exit', function(data) {
 			console.log('Exited: ', data);
+
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
 		});
 });
 
@@ -844,6 +863,10 @@ app.get('/ms/ui/git/pull', function(req, res) {
 		});
 		gitPull.on('exit', function(data) {
 			console.log('Exited: ', data);
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
 		});
 });
 
