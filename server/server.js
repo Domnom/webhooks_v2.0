@@ -13,6 +13,14 @@ app.get('/', function(req, res) {
 
 });
 
+app.get('/containers', function(req, res) {
+
+	docker.ps(function(containers) {
+		res.status(200).send(containers);
+	});
+
+});
+
 // kitset_client_api
 // kitset_gateway
 // kitset_superlogical
