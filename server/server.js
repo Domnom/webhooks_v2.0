@@ -52,12 +52,10 @@ app.get('/mysql/start', function(req, res) {
 });
 
 app.get('/mysql/stop', function(req, res) {
-	docker.kill('mysql', function(data) {
-		console.log('data', data);
-	},
-	function(error) {
-		console.log("error", error);
-	});
+	
+	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
+		
+
 });
 
 app.get('/myql/restart', function(req, res) {
