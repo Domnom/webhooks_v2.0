@@ -51,99 +51,129 @@
 
 			mysql      : function() {
 				ajaxGet("/db/mysql/docker/start");
+				getContainers();
 			},
 			mongo      : function() {
 				ajaxGet('/db/mongo/docker/start');
+				getContainers();
 			},
 			client_api : function() {
 				ajaxGet('/client/api/docker/start');
+				getContainers();
 			},
 			client_ui  : function() {
 				ajaxGet('/client/ui/docker/start');
+				getContainers();
 			},
 			client_wf  : function() {
 				ajaxGet('/client/wf/docker/start');
+				getContainers();
 			},
 			ms_api     : function() {
 				ajaxGet('/ms/api/docker/start');
+				getContainers();
 			},
 			ms_wf      : function() {
 				ajaxGet('/ms/wf/docker/start');
+				getContainers();
 			},
 			ms_ui      : function() {
 				ajaxGet('/ms/ui/docker/start');
+				getContainers();
 			},
 			ms_auth    : function() {
 				ajaxGet('/ms/auth/docker/start');
+				getContainers();
 			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/start');
+				getContainers();
 			}
 		}
 
 		var dockerStop = {
 			mysql      : function() {
 				ajaxGet("/db/mysql/docker/stop");
+				getContainers();
 			},
 			mongo      : function() {
 				ajaxGet('/db/mongo/docker/stop');
+				getContainers();
 			},
 			client_api : function() {
 				ajaxGet('/client/api/docker/stop');
+				getContainers();
 			},
 			client_ui  : function() {
 				ajaxGet('/client/ui/docker/stop');
+				getContainers();
 			},
 			client_wf  : function() {
 				ajaxGet('/client/wf/docker/stop');
+				getContainers();
 			},
 			ms_api     : function() {
 				ajaxGet('/ms/api/docker/stop');
+				getContainers();
 			},
 			ms_wf      : function() {
 				ajaxGet('/ms/wf/docker/stop');
+				getContainers();
 			},
 			ms_ui      : function() {
 				ajaxGet('/ms/ui/docker/stop');
+				getContainers();
 			},
 			ms_auth    : function() {
 				ajaxGet('/ms/auth/docker/stop');
+				getContainers();
 			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/stop');
+				getContainers();
 			}
 		}
 
 		var dockerRestart = {
 			mysql  	   : function() {
 				ajaxGet('/db/mysql/docker/restart');
+				getContainers();
 			},
 			mongo 	   : function() {
 				ajaxGet('/db/mongo/docker/restart');
+				getContainers();
 			},
 			client_api : function() {
 				ajaxGet('/client/api/docker/restart');
+				getContainers();
 			},
 			client_ui  : function() {
 				ajaxGet('/client/ui/docker/restart');
+				getContainers();
 			},
 			client_wf  : function() {
 				ajaxGet('/client/wf/docker/restart');
+				getContainers();
 			},
 			ms_api     : function() {
 				ajaxGet('/ms/api/docker/restart');
+				getContainers();
 			},
 			ms_wf      : function() {
 				ajaxGet('/ms/wf/docker/restart');
+				getContainers();
 			},
 			ms_ui      : function() {
 				ajaxGet('/ms/ui/docker/restart');
+				getContainers();
 			},
 			ms_auth    : function() {
 				ajaxGet('/ms/auth/docker/restart');
+				getContainers();
 			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/restart');
+				getContainers();
 			}
 		}
 
@@ -363,7 +393,7 @@
 		</button>
 	</div>
 	<div id="client_api_artisan">
-		<button onclick="git.client_api('migrateandseed')">
+		<button onclick="phpArtisan.client_api('migrateandseed')">
 			Migrate and seed
 		</button>
 	</div>
@@ -448,7 +478,7 @@
 	 	</button>
 	 </div>
 	 <div id="ms_api_artisan">
-	 	<button onclick="phpArtisan.ms_api(migrateandseed)">
+	 	<button onclick="phpArtisan.ms_api('migrateandseed')">
 	 		Migrate and seed
 	 	</button>
 	 </div>
