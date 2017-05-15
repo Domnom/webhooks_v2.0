@@ -2,10 +2,11 @@ var app  	   = require('express')();
 var http	   = require('http').Server(app);
 var exec 	   = require('child_process').exec;
 var DockerCompose = require("docker-compose-remote-api");
-var docker = DockerCompose({cwd: '../gateway_nodejs'}).DockerRemoteAPI({
-    host: '127.0.0.1',
-    port: 2375
-});
+var docker = DockerCompose({cwd: '../gateway_nodejs'});
+// var docker = DockerCompose({cwd: '../gateway_nodejs'}).DockerRemoteAPI({
+//     host: '127.0.0.1',
+//     port: 2375
+// });
 
 app.get('/', function(req, res) {
 
