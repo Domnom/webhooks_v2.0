@@ -78,7 +78,7 @@ app.get('/containers', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mysql/start', function(req, res) {
 
-	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
+	var execDockerCompose  = exec("docker-compose up -d mysqls", { cwd: cwd });
 		
 		execDockerCompose.stdout.on('data', function(data) { 
 			console.log('stdout data:', data);
@@ -120,8 +120,9 @@ app.get('/mysql/stop', function(req, res) {
 
 ~~~~~~~~~ */
 app.get('/myql/restart', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose restart mysql');
-	res.send('Restart mysql');
+	
+	var execDockerCompose
+
 });
 
 
@@ -136,6 +137,59 @@ app.get('/myql/restart', function(req, res) {
 	                    |___/       
 
 */
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
+app.get('/mongo/start', function(req, res) {
+
+	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
+		
+		execDockerCompose.stdout.on('data', function(data) { 
+			console.log('stdout data:', data);
+		});
+		execDockerCompose.stderr.on('data', function(data) {
+			console.log('stderr data:', data);
+		});
+
+		execDockerCompose.on('exit', function() {
+			res.status(200).send('hello there');
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
+app.get('/mongo/stop', function(req, res) {
+	
+	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
+		execDockerCompose.stdout.on('data', function(data) { 
+			console.log('stdout data:', data);
+		});
+		execDockerCompose.stderr.on('data', function(data) {
+			console.log('stderr data:', data);
+		});
+
+		execDockerCompose.on('exit', function() {
+			res.status(200).send('Mysql stopped');
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
+app.get('/mongo/restart', function(req, res) {
+	exec('cd ~/gateway_nodejs && docker-compose restart mysql');
+	res.send('Restart mysql');
+});
+
 
 
 
@@ -213,6 +267,26 @@ app.get('/myql/restart', function(req, res) {
 
 
 
+
+
+
+
+
+// var dockerComposeStop = function(serviceName, stdOutAlt, stdErrAlt, exitAlt) {
+
+// 	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
+// 		execDockerCompose.stdout.on('data', function(data) { 
+// 			console.log('stdout data:', data);
+// 		});
+// 		execDockerCompose.stderr.on('data', function(data) {
+// 			console.log('stderr data:', data);
+// 		});
+
+// 		execDockerCompose.on('exit', function() {
+// 			res.status(200).send('Mysql stopped');
+// 		});
+
+// }
 
 
 
