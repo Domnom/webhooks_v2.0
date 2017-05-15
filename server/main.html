@@ -283,8 +283,14 @@
  -->
  	<h3>Gateway</h3>
  	<div id="gateway_docker">
- 		<button>
+ 		<button onclick="dockerStart.gateway()">
  			Start
+ 		</button>
+ 		<button onclick="dockerStop.gateway()">
+ 			Stop
+ 		</button>
+ 		<button onclick="dockerRestart.gateway()">
+ 			Restart
  		</button>
  	</div>
  	<div id="gateway_git">
