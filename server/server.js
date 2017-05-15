@@ -398,6 +398,16 @@ app.get('/db/mongo/docker/restart', function(req, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*
 
 	 ____                        _             _           _ 
@@ -499,12 +509,44 @@ app.get('/client/auth/git/pull', function(req, res) {
 
 // ======================== End Git ======================== //
 // ======================== Artisan ======================== //
+/*	~~~~~~~~~
 
+	Migrate and seed
+
+~~~~~~~~~ */
+app.get('/client/auth/artisan/migrateandseed', function(req, res) {
+
+	var artisanMigrateAndSeed = exec('cd ~/microservice_superlogical && php artisan migrate:refresh --seed');
+		artisanMigrateAndSeed.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		artisanMigrateAndSeed.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		artisanMigrateAndSeed.on('exit', function(data) {
+			console.log('Exited: ', data);
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
+
+});
 
 
 
 
 // ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
 
 
 
