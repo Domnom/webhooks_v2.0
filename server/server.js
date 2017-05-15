@@ -87,7 +87,8 @@ app.get('/mysql/start', function(req, res) {
 			console.log('stderr data:', data);
 		});
 
-		execDockerCompose.on('exit', function() {
+		execDockerCompose.on('exit', function(data) {
+			console.log('Exited:', data);
 			res.status(200).send('hello there');
 		});
 
