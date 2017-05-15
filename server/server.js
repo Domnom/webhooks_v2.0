@@ -2,6 +2,7 @@ var app  	   = require('express')();
 var http	   = require('http').Server(app);
 var exec 	   = require('child_process').exec;
 var DockerCompose = require("docker-compose-remote-api");
+var cwd 	   = '../gateway_nodejs';
 var docker = DockerCompose({cwd: '../gateway_nodejs'});
 // var docker = DockerCompose({cwd: '../gateway_nodejs'}).DockerRemoteAPI({
 //     host: '127.0.0.1',
@@ -30,6 +31,11 @@ app.get('/containers', function(req, res) {
 // kitset_db_mongo
 
 app.get('/mysql/start', function(req, res) {
+
+	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
+		execDockerCompose.on('exit', function() {
+			res.status(200).send('hello there');
+		});
 	// exec('cd ~/gateway_nodejs && docker-compose start -d mysql; touch ~/docker-has-started.txt');
 	// res.send('Start mysql');
 	// docker.getContainerId("mysql", function(err, id){
