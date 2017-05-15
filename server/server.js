@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 app.get('/mysql/start', function(req, res) {
 	// exec('cd ~/gateway_nodejs && docker-compose start -d mysql; touch ~/docker-has-started.txt');
 	// res.send('Start mysql');
-	docker.getContainerId("kitset_db_mysql", function(err, id){
+	docker.getContainerId("mysql", function(err, id){
 	    if(err) console.log(err);
 	    else{
 	        var container = docker.dockerode.getContainer(id);
