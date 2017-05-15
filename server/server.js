@@ -15,6 +15,20 @@ app.get('/', function(req, res) {
 
 });
 
+
+
+
+/*
+
+	  ____            _        _                     
+	 / ___|___  _ __ | |_ __ _(_)_ __   ___ _ __ ___ 
+	| |   / _ \| '_ \| __/ _` | | '_ \ / _ \ '__/ __|
+	| |__| (_) | | | | || (_| | | | | |  __/ |  \__ \
+	 \____\___/|_| |_|\__\__,_|_|_| |_|\___|_|  |___/
+	                                                 
+
+*/
+
 app.get('/containers', function(req, res) {
 
 	var ps = '';
@@ -36,18 +50,32 @@ app.get('/containers', function(req, res) {
 		        }
 		    }
 
-		    res.status(200).send(containers);
+		    res.status(200).send({'containersArray' : containers});
 		});
 
 });
 
-// kitset_client_api
-// kitset_gateway
-// kitset_superlogical
-// kitset_server_api
-// kitset_db_mysql
-// kitset_db_mongo
 
+
+
+
+
+/*
+
+	 __  __                 _ 
+	|  \/  |_   _ ___  __ _| |
+	| |\/| | | | / __|/ _` | |
+	| |  | | |_| \__ \ (_| | |
+	|_|  |_|\__, |___/\__, |_|
+	        |___/        |_|  
+
+*/
+
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
 app.get('/mysql/start', function(req, res) {
 
 	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
@@ -65,6 +93,11 @@ app.get('/mysql/start', function(req, res) {
 
 });
 
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
 app.get('/mysql/stop', function(req, res) {
 	
 	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
@@ -81,10 +114,110 @@ app.get('/mysql/stop', function(req, res) {
 
 });
 
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
 app.get('/myql/restart', function(req, res) {
 	exec('cd ~/gateway_nodejs && docker-compose restart mysql');
 	res.send('Restart mysql');
 });
+
+
+
+/*
+
+	 __  __                         
+	|  \/  | ___  _ __   __ _  ___  
+	| |\/| |/ _ \| '_ \ / _` |/ _ \ 
+	| |  | | (_) | | | | (_| | (_) |
+	|_|  |_|\___/|_| |_|\__, |\___/ 
+	                    |___/       
+
+*/
+
+
+
+
+
+
+
+
+/*
+
+	    _    ____ ___   ____        _ _     _           
+	   / \  |  _ \_ _| | __ ) _   _(_) | __| | ___ _ __ 
+	  / _ \ | |_) | |  |  _ \| | | | | |/ _` |/ _ \ '__|
+	 / ___ \|  __/| |  | |_) | |_| | | | (_| |  __/ |   
+	/_/   \_\_|  |___| |____/ \__,_|_|_|\__,_|\___|_|   
+	                                                    
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	 __  __ ____               _    ____ ___ 
+	|  \/  / ___|             / \  |  _ \_ _|
+	| |\/| \___ \   _____    / _ \ | |_) | | 
+	| |  | |___) | |_____|  / ___ \|  __/| | 
+	|_|  |_|____/          /_/   \_\_|  |___|
+	                                         
+
+*/
+
+
+
+/*
+
+	 __  __ ____           __        _______ 
+	|  \/  / ___|          \ \      / /  ___|
+	| |\/| \___ \   _____   \ \ /\ / /| |_   
+	| |  | |___) | |_____|   \ V  V / |  _|  
+	|_|  |_|____/             \_/\_/  |_|    
+	                                         
+
+*/
+
+
+
+
+/*
+
+	 __  __ ____            _   _ ___ 
+	|  \/  / ___|          | | | |_ _|
+	| |\/| \___ \   _____  | | | || | 
+	| |  | |___) | |_____| | |_| || | 
+	|_|  |_|____/           \___/|___|
+	                                  
+
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 

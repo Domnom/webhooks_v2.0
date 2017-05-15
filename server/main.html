@@ -7,37 +7,199 @@
 <body>
 	<script>
 		
+		var getContainers = function() {
+
+			$.ajax({
+				type: "GET",
+				url : "/containers",
+				success: function(data) {
+
+					// -- Empty the container list
+					var dom = $('#containerList');
+
+					dom.empty();
+
+
+					for (var i = 0; i < data.containersArray.length; i++) {
+
+						var containerData = data.containersArray[i];
+
+						var containerHtml = containerTemplate(containerData);
+						dom.append(containerHtml);
+
+					}
+
+				},
+				error: function(error) {
+					console.error('Error: ', error);
+				}
+			}	
+		}
+
+		var containerTemplate = function(containerData) {
+			var template = `<li>
+								<div>Name: `+containerData.name+`</div>
+								<div>Command: `+containerData.command+`</div>
+								<div>State: `+containerData.state+`</div>
+								<div>Ports: `+containerData.ports+`</div>
+							</li>`;
+
+			return template;
+		}
+
 		var dockerStart = {
 
-			mysql : function() {
-				$.ajax({
-					type: 'GET',
-					url: '/mysql/start',
-					success: function(response) {
-						console.error('My response', response);
-					},
-					error: function(error) { 
-						console.error('my error', error);
-					}
-				})
-			}
+			mysql      : function() {
+				ajaxGet("/mysql/start");
+			},
+			mongo      : function() {
+				ajaxGet('/mongo/start');
+			},
+			client_api : function() {
+				
+			},
+			client_ui  : function() {
+			
+			},
+			client_wf  : function() {
+			
+			},
+			ms_api     : function() {
+			
+			},
+			ms_wf      : function() {
+			
+			},
+			ms_ui      : function() {
 
+			}
 		}
 
 		var dockerStop = {
-			mysql : function() {
-				console.error('Stop mysql');
+			mysql      : function() {
+				ajaxGet("/mysql/stop");
+			},
+			mongo      : function() {
+				ajaxGet('/mongo/stop');
+			},
+			client_api : function() {
+			
+			},
+			client_ui  : function() {
+			
+			},
+			client_wf  : function() {
+			
+			},
+			ms_api     : function() {
+			
+			},
+			ms_wf      : function() {
+			
+			},
+			ms_ui      : function() {
+
 			}
 		}
 
 		var dockerRestart = {
-			mysql : function() {
-				console.error('Restart mysql');
+			mysql  	   : function() {
+				ajaxGet('/mysql/restart');
+			},
+			mongo 	   : function() {
+				ajaxGet('/mongo/restart');
+			},
+			client_api : function() {
+			
+			},
+			client_ui  : function() {
+			
+			},
+			client_wf  : function() {
+			
+			},
+			ms_api     : function() {
+			
+			},
+			ms_wf      : function() {
+			
+			},
+			ms_ui      : function() {
+
 			}
 		}
 
+
+		var gitPull = {
+			client_api : function() {
+			
+			},
+			client_ui  : function() {
+			
+			},
+			client_wf  : function() {
+			
+			},
+			ms_api     : function() {
+			
+			},
+			ms_wf      : function() {
+			
+			},
+			ms_ui      : function() {
+
+			}
+		}
+
+
+		var ajaxGet = function(url) {
+
+			$.ajax({
+
+				type : "GET",
+				url  : url,
+				success: function(response) {
+					console.log('Response: ', response);
+				},
+				error: function(error) {
+					console.warn('Error: ', error);
+				}
+
+			})
+
+		}
+
 	</script>
-	<h1>Mysql</h1>
+
+
+<!-- 
+
+	  ____            _        _                     
+	 / ___|___  _ __ | |_ __ _(_)_ __   ___ _ __ ___ 
+	| |   / _ \| '_ \| __/ _` | | '_ \ / _ \ '__/ __|
+	| |__| (_) | | | | || (_| | | | | |  __/ |  \__ \
+	 \____\___/|_| |_|\__\__,_|_|_| |_|\___|_|  |___/
+
+ -->
+ 	<h3>Containers</h3>
+ 	<button>Get all containers</button>
+ 	<ol id="containerList">
+
+ 	</ol>
+
+
+<!-- 
+
+	 __  __                 _ 
+	|  \/  |_   _ ___  __ _| |
+	| |\/| | | | / __|/ _` | |
+	| |  | | |_| \__ \ (_| | |
+	|_|  |_|\__, |___/\__, |_|
+	        |___/        |_|  
+
+ -->
+
+	<h3>Mysql</h3>
 	<button onclick="dockerStart.mysql()">
 		Start
 	</button>
@@ -49,5 +211,32 @@
 	<button onclick="dockerRestart.mysql()">
 		Restart
 	</button>
+
+
+
+<!-- 
+
+	 __  __                         
+	|  \/  | ___  _ __   __ _  ___  
+	| |\/| |/ _ \| '_ \ / _` |/ _ \ 
+	| |  | | (_) | | | | (_| | (_) |
+	|_|  |_|\___/|_| |_|\__, |\___/ 
+	                    |___/       
+
+ -->
+ 	<h3>Mongo</h3>
+ 	<button onclick="dockerStart.mongo()">
+ 		Start
+ 	</button>
+
+ 	<button onclick="dockerStop.mongo()">
+ 		Stop
+ 	</button>
+
+ 	<button onclick="dockerRestart.mongo()">
+ 		Restart
+ 	</button>
+
+
 </body>
 </html>
