@@ -50,105 +50,134 @@
 		var dockerStart = {
 
 			mysql      : function() {
-				ajaxGet("/mysql/start");
+				ajaxGet("/db/mysql/docker/start");
 			},
 			mongo      : function() {
-				ajaxGet('/mongo/start');
+				ajaxGet('/db/mongo/docker/start');
 			},
 			client_api : function() {
-				
+				ajaxGet('/client/api/docker/start');
 			},
 			client_ui  : function() {
-			
+				ajaxGet('/client/ui/docker/start');
 			},
 			client_wf  : function() {
-			
+				ajaxGet('/client/wf/docker/start');
 			},
 			ms_api     : function() {
-			
+				ajaxGet('/ms/api/docker/start');
 			},
 			ms_wf      : function() {
-			
+				ajaxGet('/ms/wf/docker/start');
 			},
 			ms_ui      : function() {
-
+				ajaxGet('/ms/ui/docker/start');
+			},
+			gateway    : function() {
+				ajaxGet('/gateway/docker/start');
 			}
 		}
 
 		var dockerStop = {
 			mysql      : function() {
-				ajaxGet("/mysql/stop");
+				ajaxGet("/db/mysql/docker/stop");
 			},
 			mongo      : function() {
-				ajaxGet('/mongo/stop');
+				ajaxGet('/db/mongo/docker/stop');
 			},
 			client_api : function() {
-			
+				ajaxGet('/client/api/docker/stop');
 			},
 			client_ui  : function() {
-			
+				ajaxGet('/client/ui/docker/stop');
 			},
 			client_wf  : function() {
-			
+				ajaxGet('/client/wf/docker/stop');
 			},
 			ms_api     : function() {
-			
+				ajaxGet('/ms/api/docker/stop');
 			},
 			ms_wf      : function() {
-			
+				ajaxGet('/ms/wf/docker/stop');
 			},
 			ms_ui      : function() {
-
+				ajaxGet('/ms/ui/docker/stop');
+			},
+			gateway    : function() {
+				ajaxGet('/gateway/docker/stop');
 			}
 		}
 
 		var dockerRestart = {
 			mysql  	   : function() {
-				ajaxGet('/mysql/restart');
+				ajaxGet('/db/mysql/docker/restart');
 			},
 			mongo 	   : function() {
-				ajaxGet('/mongo/restart');
+				ajaxGet('/db/mongo/docker/restart');
 			},
 			client_api : function() {
-			
+				ajaxGet('/client/api/docker/restart');
 			},
 			client_ui  : function() {
-			
+				ajaxGet('/client/ui/docker/restart');
 			},
 			client_wf  : function() {
-			
+				ajaxGet('/client/wf/docker/restart');
 			},
 			ms_api     : function() {
-			
+				ajaxGet('/ms/api/docker/restart');
 			},
 			ms_wf      : function() {
-			
+				ajaxGet('/ms/wf/docker/restart');
 			},
 			ms_ui      : function() {
-
+				ajaxGet('/ms/ui/docker/restart');
+			},
+			gateway    : function() {
+				ajaxGet('/gateway/docker/restart');
 			}
 		}
 
 
-		var gitPull = {
-			client_api : function() {
-			
+		var git = {
+			client_api : function(command) {
+				ajaxGet('/client/api/git/' + command);	
 			},
-			client_ui  : function() {
-			
+			client_ui  : function(command) {
+				ajaxGet('/client/ui/git/' + command);
 			},
-			client_wf  : function() {
-			
+			client_wf  : function(command) {
+				ajaxGet('/client/wf/git/' + command);
 			},
-			ms_api     : function() {
-			
+			ms_api     : function(command) {
+				ajaxGet('/ms/api/git/' + command);
 			},
-			ms_wf      : function() {
-			
+			ms_wf      : function(command) {
+				ajaxGet('/ms/wf/git/' + command);
 			},
-			ms_ui      : function() {
-
+			ms_ui      : function(command) {
+				ajaxGet('/ms/ui/git/' + command);
+			},
+			gateway    : function(command) {
+				ajaxGet('/gateway/git/' + command);
 			}
+		}
+
+		var phpArtisan = {
+
+			ms_api     : function(command) {
+				ajaxGet('/ms/api/artisan/' + comamnd);
+			},
+			ms_wf      : function(command) {
+				ajaxGet('/ms/wf/artisan/' + comamnd);
+			},
+			ms_ui      : function(command) {
+				ajaxGet('/ms/ui/artisan/' + comamnd);
+			},
+			gateway    : function(command) {
+				ajaxGet('/gateway/artisan/' + comamnd);
+			}
+
 		}
 
 
@@ -186,6 +215,32 @@
  	<ol id="containerList">
 
  	</ol>
+
+
+
+<!-- 
+
+	  ____       _                           
+	 / ___| __ _| |_ _____      ____ _ _   _ 
+	| |  _ / _` | __/ _ \ \ /\ / / _` | | | |
+	| |_| | (_| | ||  __/\ V  V / (_| | |_| |
+	 \____|\__,_|\__\___| \_/\_/ \__,_|\__, |
+	                                   |___/ 
+
+ -->
+ 	<h3>Gateway</h3>
+ 	<div id="gateway_docker">
+ 		<button>
+ 			Start
+ 		</button>
+ 	</div>
+ 	<div id="gateway_git">
+ 		<button>
+ 			Pull
+ 		</button>
+ 	</div>
+
+
 
 
 <!-- 
@@ -237,6 +292,84 @@
  		Restart
  	</button>
 
+
+
+
+<!-- 
+
+	    _    ____ ___   ____        _ _     _           
+	   / \  |  _ \_ _| | __ ) _   _(_) | __| | ___ _ __ 
+	  / _ \ | |_) | |  |  _ \| | | | | |/ _` |/ _ \ '__|
+	 / ___ \|  __/| |  | |_) | |_| | | | (_| |  __/ |   
+	/_/   \_\_|  |___| |____/ \__,_|_|_|\__,_|\___|_|   
+	                                                   
+
+ -->
+	<h3>Client - API</h3>
+
+	<div id="client_api_docker">
+		<button onclick="dockerStart.client_api()">
+			Start
+		</button>
+
+		<button onclick="dockerStop.client_api()">
+			Stop
+		</button>
+
+		<button onclick="dockerRestart.client_api()">
+			Restart
+		</button>
+	</div>
+	<div id="client_api_git">
+		<button onclick="git.client_api('pull')">
+			Pull
+		</button>
+	</div>
+	<div id="client_api_artisan">
+		<button onclick="git.client_api('migrateandseed')">
+			Migrate and seed
+		</button>
+	</div>
+
+
+
+
+
+
+
+<!-- 
+
+	 __  __ ____               _    ____ ___ 
+	|  \/  / ___|             / \  |  _ \_ _|
+	| |\/| \___ \   _____    / _ \ | |_) | | 
+	| |  | |___) | |_____|  / ___ \|  __/| | 
+	|_|  |_|____/          /_/   \_\_|  |___|
+
+ -->
+ 	<h3>MS - API</h3>
+ 	<div id="ms_api_docker">
+	 	<button onclick="dockerStart.ms_api()">
+	 		Start
+	 	</button>
+
+	 	<button onclick="dockerStop.ms_api()">
+	 		Stop
+	 	</button>
+
+	 	<button onclick="dockerRestart.ms_api()">
+	 		Restart
+	 	</button>
+	 </div>
+	 <div id="ms_api_git">
+	 	<button onclick="git.ms_api('pull')">
+	 		Pull
+	 	</button>
+	 </div>
+	 <div id="ms_api_artisan">
+	 	<button onclick="phpArtisan.ms_api(migrateandseed)">
+	 		Migrate and seed
+	 	</button>
+	 </div>
 
 </body>
 </html>

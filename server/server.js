@@ -1,13 +1,8 @@
 var app  	   = require('express')();
 var http	   = require('http').Server(app);
 var exec 	   = require('child_process').exec;
-var DockerCompose = require("docker-compose-remote-api");
 var cwd 	   = '../gateway_nodejs';
-var docker = DockerCompose({cwd: '../gateway_nodejs'});
-// var docker = DockerCompose({cwd: '../gateway_nodejs'}).DockerRemoteAPI({
-//     host: '127.0.0.1',
-//     port: 2375
-// });
+
 
 
 
@@ -23,6 +18,15 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/main.html');
 
 });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -69,30 +73,42 @@ app.get('/containers', function(req, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /*
 
-	 __  __                 _ 
-	|  \/  |_   _ ___  __ _| |
-	| |\/| | | | / __|/ _` | |
-	| |  | | |_| \__ \ (_| | |
-	|_|  |_|\__, |___/\__, |_|
-	        |___/        |_|  
+	  ____       _                           
+	 / ___| __ _| |_ _____      ____ _ _   _ 
+	| |  _ / _` | __/ _ \ \ /\ / / _` | | | |
+	| |_| | (_| | ||  __/\ V  V / (_| | |_| |
+	 \____|\__,_|\__\___| \_/\_/ \__,_|\__, |
+	                                   |___/ 
 
 */
 
+// ======================== Docker ======================== //
 /*	~~~~~~~~~
 
 	Start
 
 ~~~~~~~~~ */
-app.get('/mysql/start', function(req, res) {
+app.get('/gateway/docker/start', function(req, res) {
 
-	 dockerComposeStart('mysql')
+	 dockerComposeStart('gateway')
 	.then(function(data) {
 
 		res.status(200)
 		   .send({
-		   		message: "Mysql container started"
+		   		message: "kitset_gateway container started"
 		   });
 	})
 	.catch(function(error) {
@@ -106,13 +122,13 @@ app.get('/mysql/start', function(req, res) {
 	Stop
 
 ~~~~~~~~~ */
-app.get('/mysql/stop', function(req, res) {
+app.get('/gateway/docker/stop', function(req, res) {
 	
-	dockerComposeStop('mysql')
+	dockerComposeStop('gateway')
 		.then(function(data) {
 			res.status(200)
 			   .send({
-			   		message: "Mysql container stopped"
+			   		message: "kitset_gateway container stopped"
 			   });
 		})
 		.catch(function(error) {
@@ -126,13 +142,13 @@ app.get('/mysql/stop', function(req, res) {
 	Restart
 
 ~~~~~~~~~ */
-app.get('/mysql/restart', function(req, res) {
+app.get('/gateway/docker/restart', function(req, res) {
 	
-	dockerComposeRestart('mysql')
+	dockerComposeRestart('gateway')
 		.then(function(data) {
 			res.status(200)
 			   .send({
-			   		message: "Mysql container restarted"
+			   		message: "kitset_gateway container restarted"
 			   });
 		})
 		.catch(function(error) {
@@ -140,6 +156,140 @@ app.get('/mysql/restart', function(req, res) {
 		});
 
 });
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/gateway/git/pull', function(req,res) {
+
+	var gitPull = exec('cd ~/gateway_nodejs && git pull --all && mv .env.staging .env');
+
+});
+
+// ======================== End git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	 __  __                 _ 
+	|  \/  |_   _ ___  __ _| |
+	| |\/| | | | / __|/ _` | |
+	| |  | | |_| \__ \ (_| | |
+	|_|  |_|\__, |___/\__, |_|
+	        |___/        |_|  
+
+*/
+// ======================== Docker ======================== //
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
+app.get('/db/mysql/docker/start', function(req, res) {
+
+	 dockerComposeStart('mysql')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "kitset_db_mysql container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
+
+});
+
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
+app.get('/db/mysql/docker/stop', function(req, res) {
+	
+	dockerComposeStop('mysql')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_db_mysql container stopped"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
+app.get('/db/mysql/docker/restart', function(req, res) {
+	
+	dockerComposeRestart('mysql')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_db_mysql container restarted"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -153,19 +303,20 @@ app.get('/mysql/restart', function(req, res) {
 	                    |___/       
 
 */
+// ======================== Docker ======================== //
 /*	~~~~~~~~~
 
 	Start
 
 ~~~~~~~~~ */
-app.get('/mongo/start', function(req, res) {
+app.get('/db/mongo/docker/start', function(req, res) {
 
 	 dockerComposeStart('mongodb')
 	.then(function(data) {
 
 		res.status(200)
 		   .send({
-		   		message: "Mongodb container started"
+		   		message: "kitset_db_mongo container started"
 		   });
 	})
 	.catch(function(error) {
@@ -179,13 +330,13 @@ app.get('/mongo/start', function(req, res) {
 	Stop
 
 ~~~~~~~~~ */
-app.get('/mongo/stop', function(req, res) {
+app.get('/db/mongo/docker/stop', function(req, res) {
 	
 	dockerComposeStop('mongodb')
 		.then(function(data) {
 			res.status(200)
 			   .send({
-			   		message: "Mongodb container stopped"
+			   		message: "kitset_db_mongo container stopped"
 			   });
 		})
 		.catch(function(error) {
@@ -199,13 +350,13 @@ app.get('/mongo/stop', function(req, res) {
 	Restart
 
 ~~~~~~~~~ */
-app.get('/mongo/restart', function(req, res) {
+app.get('/db/mongo/docker/restart', function(req, res) {
 
 	dockerComposeRestart('mongodb')
 		.then(function(data) {
 			res.status(200)
 			   .send({
-			   		message: "Mongodb container restarted"
+			   		message: "kitset_db_mongo container restarted"
 			   });
 		})
 		.catch(function(error) {
@@ -213,6 +364,27 @@ app.get('/mongo/restart', function(req, res) {
 		});
 
 });
+
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
 
 
 
@@ -233,6 +405,178 @@ app.get('/mongo/restart', function(req, res) {
 
 */
 
+// ======================== Docker ======================== //
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
+app.get('/client/api/docker/start', function(req, res) {
+
+	 dockerComposeStart('client-api')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "kitset_client_api container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
+
+});
+
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
+app.get('/client/api/docker/stop', function(req, res) {
+	
+	dockerComposeStop('client-api')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_client_api container stopped"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
+app.get('/client/api/docker/restart', function(req, res) {
+
+	dockerComposeRestart('client-api')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_client_api container restarted"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/client/api/git/pull', function(req, res) {
+
+	var gitPull = exec('cd ~/client_webapp_apibuilder && git pull --all');
+
+});
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	 _   _ ___   ____        _ _     _           
+	| | | |_ _| | __ ) _   _(_) | __| | ___ _ __ 
+	| | | || |  |  _ \| | | | | |/ _` |/ _ \ '__|
+	| |_| || |  | |_) | |_| | | | (_| |  __/ |   
+	 \___/|___| |____/ \__,_|_|_|\__,_|\___|_|   
+	                                             
+
+*/
+// ======================== Docker ======================== //
+
+
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	__        _______   ____        _ _     _           
+	\ \      / /  ___| | __ ) _   _(_) | __| | ___ _ __ 
+	 \ \ /\ / /| |_    |  _ \| | | | | |/ _` |/ _ \ '__|
+	  \ V  V / |  _|   | |_) | |_| | | | (_| |  __/ |   
+	   \_/\_/  |_|     |____/ \__,_|_|_|\__,_|\___|_|   
+	                                                    
+
+*/
+// ======================== Docker ======================== //
+
+
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+// ======================== End artisan ======================== //
 
 
 
@@ -259,6 +603,117 @@ app.get('/mongo/restart', function(req, res) {
 
 */
 
+// ======================== Docker ======================== //
+
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
+app.get('/ms/api/docker/start', function(req, res) {
+
+	 dockerComposeStart('api-builder')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "kitset_api_builder container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
+
+});
+
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
+app.get('/ms/api/docker/stop', function(req, res) {
+	
+	dockerComposeStop('api-builder')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_api_builder container stopped"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
+app.get('/ms/api/docker/restart', function(req, res) {
+
+	dockerComposeRestart('api-builder')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_api_builder container restarted"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/ms/api/git/pull', function(req, res) {
+
+	var gitPull = exec('cd ~/microservice_api && git pull --all && mv .env.staging .env && composer update');
+
+});
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+/*	~~~~~~~~~
+
+	Migrate and seed
+
+~~~~~~~~~ */
+app.get('/ms/api/artisan/migrateandseed', function(req, res) {
+
+	var artisanMigrateAndSeed = exec('cd ~/microservice_api && php artisan migrate:refresh --seed');
+
+});
+
+
+
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -271,6 +726,55 @@ app.get('/mongo/restart', function(req, res) {
 	                                         
 
 */
+// ======================== Docker ======================== //
+
+
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/ms/wf/git/pull', function(req, res) {
+
+	var gitPull = exec('cd ~/microservice_wf && git pull --all && mv .env.staging .env');
+
+});
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+/*	~~~~~~~~~
+
+	Migrate and seed
+
+~~~~~~~~~ */
+app.get('/ms/wf/artisan/migrateandseed', function(req, res) {
+
+	var artisanMigrateAndSeed = exec('cd ~/microservice_wf && php artisan migrate:refresh --seed');
+
+});
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -285,6 +789,52 @@ app.get('/mongo/restart', function(req, res) {
 	                                  
 
 */
+// ======================== Docker ======================== //
+
+
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/ms/ui/git/pull', function(req, res) {
+
+	var gitPull = exec('cd ~/microservice_ui && git pull --all && mv .env.staging .env');
+
+});
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+/*	~~~~~~~~~
+
+	Migrate and seed
+
+~~~~~~~~~ */
+app.get('/ms/ui/artisan/migrateandseed', function(req, res) {
+
+	var artisanMigrateAndSeed = exec('cd ~/microservice_ui && php artisan migrate:refresh --seed');
+
+});
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
 
 
 
