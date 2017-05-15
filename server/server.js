@@ -54,7 +54,8 @@ app.get('/mysql/start', function(req, res) {
 app.get('/mysql/stop', function(req, res) {
 	
 	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
-		
+
+	res.send('okay');
 
 });
 
