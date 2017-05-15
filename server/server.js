@@ -33,29 +33,33 @@ app.get('/containers', function(req, res) {
 app.get('/mysql/start', function(req, res) {
 
 	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
+		
+		execDockerCompose.stdout.on('data', function(data) { 
+			console.log('stdout data:', data);
+		});
+		execDockerCompose.stderr.on('data', function(data) {
+			console.log('stderr data:', data);
+		});
+
 		execDockerCompose.on('exit', function() {
 			res.status(200).send('hello there');
 		});
-	// exec('cd ~/gateway_nodejs && docker-compose start -d mysql; touch ~/docker-has-started.txt');
-	// res.send('Start mysql');
-	// docker.getContainerId("mysql", function(err, id){
-	//     if(err) console.log(err);
-	//     else{
-	//         var container = docker.dockerode.getContainer(id);
-	//         container.inspect(function (err, data) {
-	//             console.log(data);
-	//             res.status(200).send('myData', data);
-	//         });
-	//     }
-	// });
 
 });
 
 app.get('/mysql/stop', function(req, res) {
 	
 	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
+		execDockerCompose.stdout.on('data', function(data) { 
+			console.log('stdout data:', data);
+		});
+		execDockerCompose.stderr.on('data', function(data) {
+			console.log('stderr data:', data);
+		});
 
-	res.send('okay');
+		execDockerCompose.on('exit', function() {
+			res.status(200).send('Mysql stopped');
+		});
 
 });
 
