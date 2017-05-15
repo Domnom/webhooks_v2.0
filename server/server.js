@@ -78,17 +78,20 @@ app.get('/containers', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mysql/start', function(req, res) {
 
-	var execDockerCompose  = exec("docker-compose up -d mysqls", { cwd: cwd });
+	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
 		
 		execDockerCompose.stdout.on('data', function(data) { 
 			console.log('stdout data:', data);
 		});
 		execDockerCompose.stderr.on('data', function(data) {
+
 			console.log('stderr data:', data);
 		});
 
 		execDockerCompose.on('exit', function(data) {
+			// data == 1 FAILURE
 			console.log('Exited:', data);
+
 			res.status(200).send('hello there');
 		});
 
