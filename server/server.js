@@ -78,22 +78,16 @@ app.get('/containers', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mysql/start', function(req, res) {
 
-	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
-		
-		execDockerCompose.stdout.on('data', function(data) { 
-			console.log('stdout data:', data);
-		});
-		execDockerCompose.stderr.on('data', function(data) {
-
-			console.log('stderr data:', data);
-		});
-
-		execDockerCompose.on('exit', function(data) {
-			// data == 1 FAILURE
-			console.log('Exited:', data);
-
-			res.status(200).send('hello there');
-		});
+	dockerComposeStart('mysql')
+		.then(data) {
+			res.status(200)
+			   .send({
+			   		message: "Mysql container started"
+			   });
+		}
+		.catch(error) {
+			console.log('Something went wrong...', error);
+		}
 
 });
 
@@ -104,17 +98,16 @@ app.get('/mysql/start', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mysql/stop', function(req, res) {
 	
-	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
-		execDockerCompose.stdout.on('data', function(data) { 
-			console.log('stdout data:', data);
-		});
-		execDockerCompose.stderr.on('data', function(data) {
-			console.log('stderr data:', data);
-		});
-
-		execDockerCompose.on('exit', function() {
-			res.status(200).send('Mysql stopped');
-		});
+	dockerComposeStop('mysql')
+		.then(data) {
+			res.status(200)
+			   .send({
+			   		message: "Mysql container stopped"
+			   });
+		}
+		.catch(error) {
+			console.log('Something went wrong...', error);
+		}
 
 });
 
@@ -123,9 +116,18 @@ app.get('/mysql/stop', function(req, res) {
 	Restart
 
 ~~~~~~~~~ */
-app.get('/myql/restart', function(req, res) {
+app.get('/mysql/restart', function(req, res) {
 	
-	var execDockerCompose
+	dockerComposeRestart('mysql')
+		.then(data) {
+			res.status(200)
+			   .send({
+			   		message: "Mysql container restarted"
+			   });
+		}
+		.catch(error) {
+			console.log('Something went wrong...', error);
+		}
 
 });
 
@@ -148,18 +150,16 @@ app.get('/myql/restart', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mongo/start', function(req, res) {
 
-	var execDockerCompose  = exec("docker-compose up -d mysql", { cwd: cwd });
-		
-		execDockerCompose.stdout.on('data', function(data) { 
-			console.log('stdout data:', data);
-		});
-		execDockerCompose.stderr.on('data', function(data) {
-			console.log('stderr data:', data);
-		});
-
-		execDockerCompose.on('exit', function() {
-			res.status(200).send('hello there');
-		});
+	dockerComposeStart('mongodb')
+		.then(data) {
+			res.status(200)
+			   .send({
+			   		message: "Mongodb container stopped"
+			   });
+		}
+		.catch(error) {
+			console.log('Something went wrong...', error);
+		}
 
 });
 
@@ -170,17 +170,16 @@ app.get('/mongo/start', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mongo/stop', function(req, res) {
 	
-	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
-		execDockerCompose.stdout.on('data', function(data) { 
-			console.log('stdout data:', data);
-		});
-		execDockerCompose.stderr.on('data', function(data) {
-			console.log('stderr data:', data);
-		});
-
-		execDockerCompose.on('exit', function() {
-			res.status(200).send('Mysql stopped');
-		});
+	dockerComposeStop('mongodb')
+		.then(data) {
+			res.status(200)
+			   .send({
+			   		message: "Mongodb container stopped"
+			   });
+		}
+		.catch(error) {
+			console.log('Something went wrong...', error);
+		}
 
 });
 
@@ -190,8 +189,18 @@ app.get('/mongo/stop', function(req, res) {
 
 ~~~~~~~~~ */
 app.get('/mongo/restart', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose restart mysql');
-	res.send('Restart mysql');
+
+	dockerComposeRestart('mongodb')
+		.then(data) {
+			res.status(200)
+			   .send({
+			   		message: "Mongodb container restarted"
+			   });
+		}
+		.catch(error) {
+			console.log('Something went wrong...', error);
+		}
+
 });
 
 
@@ -272,25 +281,91 @@ app.get('/mongo/restart', function(req, res) {
 
 
 
+var dockerComposeStart = function(serviceName, stdOutAlt=null, stdErrAlt=null, exitAlt=null) {
+
+	return new Promise (function (thenCallback, catchCallback) {
+
+		var execDockerCompose = exec("docker-compose up -d " + serviceName, { cwd: cwd });
+			
+			execDockerCompose.stdout.on('data', function(data) { 
+				console.log('stdout data:', data);
+			});
+			execDockerCompose.stderr.on('data', function(data) {
+				console.log('stderr data:', data);
+			});
+
+			execDockerCompose.on('exit', function(data) {
+				
+				if (data == 0) {
+			// -- SUCCESS
+					thenCallback(data);
+				} else {
+			// -- FAILURE
+					catchCallback(data);
+
+				}
+			});
+	
+	});
+}
 
 
 
+var dockerComposeStop = function(serviceName, stdOutAlt, stdErrAlt, exitAlt) {
 
-// var dockerComposeStop = function(serviceName, stdOutAlt, stdErrAlt, exitAlt) {
+	return new Promise (function (thenCallback, catchCallback) {
 
-// 	var execDockerCompose = exec("docker-compose stop mysql", { cwd: cwd });
-// 		execDockerCompose.stdout.on('data', function(data) { 
-// 			console.log('stdout data:', data);
-// 		});
-// 		execDockerCompose.stderr.on('data', function(data) {
-// 			console.log('stderr data:', data);
-// 		});
+		var execDockerCompose = exec("docker-compose stop " + serviceName, { cwd: cwd });
+			
+			execDockerCompose.stdout.on('data', function(data) { 
+				console.log('stdout data:', data);
+			});
+			execDockerCompose.stderr.on('data', function(data) {
+				console.log('stderr data:', data);
+			});
 
-// 		execDockerCompose.on('exit', function() {
-// 			res.status(200).send('Mysql stopped');
-// 		});
+			execDockerCompose.on('exit', function(data) {
 
-// }
+				if (data == 0) {
+			// -- SUCCESS
+					thenCallback(data);
+				} else {
+			// -- FAILURE
+					catchCallback(data);
+
+				}
+			});
+	
+	});
+}
+
+var dockerComposeRestart = function(serviceName, stdOutAlt, stdErrAlt, exitAlt) {
+
+	return new Promise (function (thenCallback, catchCallback) {
+
+		var execDockerCompose = exec("docker-compose restart " + serviceName, { cwd: cwd });
+			
+			execDockerCompose.stdout.on('data', function(data) { 
+				console.log('stdout data:', data);
+			});
+			execDockerCompose.stderr.on('data', function(data) {
+				console.log('stderr data:', data);
+			});
+
+			execDockerCompose.on('exit', function(data) {
+
+				if (data == 0) {
+			// -- SUCCESS
+					thenCallback(data);
+				} else {
+			// -- FAILURE
+					catchCallback(data);
+
+				}
+			});
+	
+	});
+}
 
 
 
