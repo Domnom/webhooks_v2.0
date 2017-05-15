@@ -21,7 +21,7 @@ app.get('/mysql/start', function(req, res) {
 });
 
 app.get('/mysql/stop', function(req, res) {
-	exec('docker-compose stop kitset_db_mysql');
+	exec('cd ~/gateway_nodejs && docker-compose stop mysql');
 	res.send('Stop mysql');
 });
 
