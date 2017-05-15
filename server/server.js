@@ -1,6 +1,6 @@
 var app  	   = require('express')();
 var http	   = require('http').Server(app);
-var exec 	   = require('child_process').exec;
+var spawn 	   = require('child_process').spawn;
 
 app.get('/', function(req, res) {
 
@@ -16,17 +16,17 @@ app.get('/', function(req, res) {
 // kitset_db_mongo
 
 app.get('/mysql/start', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose start -d mysql; touch ~/docker-has-started.txt');
+	spawn('cd ~/gateway_nodejs && docker-compose start -d mysql; touch ~/docker-has-started.txt');
 	res.send('Start mysql');
 });
 
 app.get('/mysql/stop', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose stop mysql');
+	spawn('cd ~/gateway_nodejs && docker-compose stop mysql');
 	res.send('Stop mysql');
 });
 
 app.get('/myql/restart', function(req, res) {
-	exec('cd ~/gateway_nodejs && docker-compose restart mysql');
+	spawn('cd ~/gateway_nodejs && docker-compose restart mysql');
 	res.send('Restart mysql');
 });
 
