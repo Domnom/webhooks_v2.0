@@ -168,7 +168,15 @@ app.get('/gateway/docker/restart', function(req, res) {
 app.get('/gateway/git/pull', function(req,res) {
 
 	var gitPull = exec('cd ~/gateway_nodejs && git pull --all && mv .env.staging .env');
-
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+		});
 });
 
 // ======================== End git ======================== //
