@@ -9,6 +9,15 @@ var docker = DockerCompose({cwd: '../gateway_nodejs'});
 //     port: 2375
 // });
 
+
+
+
+
+
+
+
+
+
 app.get('/', function(req, res) {
 
 	res.sendFile(__dirname + '/main.html');
@@ -78,16 +87,17 @@ app.get('/containers', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mysql/start', function(req, res) {
 
-	dockerComposeStart('mysql')
-		.then(data) {
-			res.status(200)
-			   .send({
-			   		message: "Mysql container started"
-			   });
-		}
-		.catch(error) {
-			console.log('Something went wrong...', error);
-		}
+	 dockerComposeStart('mysql')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "Mysql container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
 
 });
 
@@ -99,15 +109,15 @@ app.get('/mysql/start', function(req, res) {
 app.get('/mysql/stop', function(req, res) {
 	
 	dockerComposeStop('mysql')
-		.then(data) {
+		.then(function(data) {
 			res.status(200)
 			   .send({
 			   		message: "Mysql container stopped"
 			   });
-		}
-		.catch(error) {
+		})
+		.catch(function(error) {
 			console.log('Something went wrong...', error);
-		}
+		});
 
 });
 
@@ -119,15 +129,15 @@ app.get('/mysql/stop', function(req, res) {
 app.get('/mysql/restart', function(req, res) {
 	
 	dockerComposeRestart('mysql')
-		.then(data) {
+		.then(function(data) {
 			res.status(200)
 			   .send({
 			   		message: "Mysql container restarted"
 			   });
-		}
-		.catch(error) {
+		})
+		.catch(function(error) {
 			console.log('Something went wrong...', error);
-		}
+		});
 
 });
 
@@ -150,16 +160,17 @@ app.get('/mysql/restart', function(req, res) {
 ~~~~~~~~~ */
 app.get('/mongo/start', function(req, res) {
 
-	dockerComposeStart('mongodb')
-		.then(data) {
-			res.status(200)
-			   .send({
-			   		message: "Mongodb container stopped"
-			   });
-		}
-		.catch(error) {
-			console.log('Something went wrong...', error);
-		}
+	 dockerComposeStart('mongodb')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "Mongodb container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
 
 });
 
@@ -171,15 +182,15 @@ app.get('/mongo/start', function(req, res) {
 app.get('/mongo/stop', function(req, res) {
 	
 	dockerComposeStop('mongodb')
-		.then(data) {
+		.then(function(data) {
 			res.status(200)
 			   .send({
 			   		message: "Mongodb container stopped"
 			   });
-		}
-		.catch(error) {
+		})
+		.catch(function(error) {
 			console.log('Something went wrong...', error);
-		}
+		});
 
 });
 
@@ -191,15 +202,15 @@ app.get('/mongo/stop', function(req, res) {
 app.get('/mongo/restart', function(req, res) {
 
 	dockerComposeRestart('mongodb')
-		.then(data) {
+		.then(function(data) {
 			res.status(200)
 			   .send({
 			   		message: "Mongodb container restarted"
 			   });
-		}
-		.catch(error) {
+		})
+		.catch(function(error) {
 			console.log('Something went wrong...', error);
-		}
+		});
 
 });
 
@@ -274,6 +285,9 @@ app.get('/mongo/restart', function(req, res) {
 	                                  
 
 */
+
+
+
 
 
 
@@ -366,9 +380,6 @@ var dockerComposeRestart = function(serviceName, stdOutAlt, stdErrAlt, exitAlt) 
 	
 	});
 }
-
-
-
 
 
 
