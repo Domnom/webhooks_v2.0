@@ -712,7 +712,7 @@ app.get('/ms/auth/docker/restart', function(req, res) {
 ~~~~~~~~~ */
 app.get('/ms/auth/git/pull', function(req, res) {
 
-	var gitPull = exec('cd ~/microservice_superlogical && git pull --all');
+	var gitPull = exec('cd ~/microservice_superlogical && git pull --all && mv .env.staging .env && composer update');
 		gitPull.stdout.on('data', function(data) {
 			console.log('stdout: ', data);
 		});
