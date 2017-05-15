@@ -17,9 +17,27 @@ app.get('/', function(req, res) {
 
 app.get('/containers', function(req, res) {
 
-	docker.ps(function(containers) {
-		res.status(200).send(containers);
-	});
+	var ps = '';
+
+	var execDockerCompose = exec("docker-compose ps", { cwd: cwd });
+		execDockerCompose.stdout.on('data', function(data) { 
+			ps += data.toString();
+		});
+		execDockerCompose.on('exit', function(data) { 
+		    var lines = ps.split("\n");
+		    var containers = [];
+		    if(lines.length > 2){
+		        
+		        for(var key=2; key < lines.length; key++){
+		            var stats = lines[key].replace("\r").split("   ");
+		            
+		            if(stats[0] && stats[1])
+		                containers.push({name: stats[0], command: stats[1], state: stats[2], ports: stats[3]})
+		        }
+		    }
+
+		    res.status(200).send(containers);
+		});
 
 });
 
