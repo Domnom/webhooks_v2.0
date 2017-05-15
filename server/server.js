@@ -485,7 +485,15 @@ app.get('/client/api/docker/restart', function(req, res) {
 app.get('/client/api/git/pull', function(req, res) {
 
 	var gitPull = exec('cd ~/client_webapp_apibuilder && git pull --all');
-
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+		});
 });
 
 
@@ -685,7 +693,15 @@ app.get('/ms/api/docker/restart', function(req, res) {
 app.get('/ms/api/git/pull', function(req, res) {
 
 	var gitPull = exec('cd ~/microservice_api && git pull --all && mv .env.staging .env && composer update');
-
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+		});
 });
 
 
@@ -749,7 +765,15 @@ app.get('/ms/api/artisan/migrateandseed', function(req, res) {
 app.get('/ms/wf/git/pull', function(req, res) {
 
 	var gitPull = exec('cd ~/microservice_wf && git pull --all && mv .env.staging .env');
-
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+		});
 });
 
 
@@ -812,7 +836,15 @@ app.get('/ms/wf/artisan/migrateandseed', function(req, res) {
 app.get('/ms/ui/git/pull', function(req, res) {
 
 	var gitPull = exec('cd ~/microservice_ui && git pull --all && mv .env.staging .env');
-
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+		});
 });
 
 
