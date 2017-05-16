@@ -88,6 +88,10 @@
 			gateway    : function() {
 				ajaxGet('/gateway/docker/start');
 				getContainers();
+			},
+			ms_socket  : function() {
+				ajaxGet('/ms/socket/docker/start');
+				getContainers();
 			}
 		}
 
@@ -130,6 +134,10 @@
 			},
 			gateway    : function() {
 				ajaxGet('/gateway/docker/stop');
+				getContainers();
+			},
+			ms_socket  : function() {
+				ajaxGet('/ms/socket/docker/stop');
 				getContainers();
 			}
 		}
@@ -174,6 +182,10 @@
 			gateway    : function() {
 				ajaxGet('/gateway/docker/restart');
 				getContainers();
+			},
+			ms_socket  : function() {
+				ajaxGet('/ms/socket/docker/restart');
+				getContainers();
 			}
 		}
 
@@ -202,6 +214,9 @@
 			},
 			gateway    : function(command) {
 				ajaxGet('/gateway/git/' + command);
+			},
+			ms_socket  : function(command) {
+				ajaxGet('/ms/socket/git/' + command);
 			}
 		}
 
@@ -486,6 +501,36 @@
 	 <div id="ms_api_artisan">
 	 	<button onclick="phpArtisan.ms_api('migrateandseed')">
 	 		Migrate and seed
+	 	</button>
+	 </div>
+
+
+<!-- 
+
+	 ____             _        _   
+	/ ___|  ___   ___| | _____| |_ 
+	\___ \ / _ \ / __| |/ / _ \ __|
+	 ___) | (_) | (__|   <  __/ |_ 
+	|____/ \___/ \___|_|\_\___|\__|
+
+ -->
+ 	<h3>MS - Socket</h3>
+ 	<div id="ms_socket_docker">
+	 	<button onclick="dockerStart.ms_socket()">
+	 		Start
+	 	</button>
+
+	 	<button onclick="dockerStop.ms_socket()">
+	 		Stop
+	 	</button>
+
+	 	<button onclick="dockerRestart.ms_socket()">
+	 		Restart
+	 	</button>
+	 </div>
+	 <div id="ms_socket_git">
+	 	<button onclick="git.ms_socket('pull')">
+	 		Pull
 	 	</button>
 	 </div>
 

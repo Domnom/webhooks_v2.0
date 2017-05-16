@@ -1106,6 +1106,124 @@ app.get('/ms/ui/artisan/migrateandseed', function(req, res) {
 
 
 
+/*
+
+	 ____             _        _   
+	/ ___|  ___   ___| | _____| |_ 
+	\___ \ / _ \ / __| |/ / _ \ __|
+	 ___) | (_) | (__|   <  __/ |_ 
+	|____/ \___/ \___|_|\_\___|\__|
+	                               
+
+*/
+// ======================== Docker ======================== //
+/*	~~~~~~~~~
+
+	Start
+
+~~~~~~~~~ */
+app.get('/ms/socket/docker/start', function(req, res) {
+
+	 dockerComposeStart('socket')
+	.then(function(data) {
+
+		res.status(200)
+		   .send({
+		   		message: "kitset_socket container started"
+		   });
+	})
+	.catch(function(error) {
+		console.log('Something went wrong...', error);
+	});
+
+});
+
+/*	~~~~~~~~~
+
+	Stop
+
+~~~~~~~~~ */
+app.get('/ms/socket/docker/stop', function(req, res) {
+	
+	dockerComposeStop('socket')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_socket container stopped"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+/*	~~~~~~~~~
+
+	Restart
+
+~~~~~~~~~ */
+app.get('/ms/socket/docker/restart', function(req, res) {
+
+	dockerComposeRestart('socket')
+		.then(function(data) {
+			res.status(200)
+			   .send({
+			   		message: "kitset_socket container restarted"
+			   });
+		})
+		.catch(function(error) {
+			console.log('Something went wrong...', error);
+		});
+
+});
+
+
+
+// ======================== End Docker ======================== //
+// ======================== Git ======================== //
+/*	~~~~~~~~~
+
+	Pull
+
+~~~~~~~~~ */
+app.get('/ms/socket/git/pull', function(req, res) {
+
+	var gitPull = exec('cd ~/microservice_socket && git pull --all');
+		gitPull.stdout.on('data', function(data) {
+			console.log('stdout: ', data);
+		});
+		gitPull.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		gitPull.on('exit', function(data) {
+			console.log('Exited: ', data);
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
+});
+
+
+
+// ======================== End Git ======================== //
+// ======================== Artisan ======================== //
+
+
+
+// ======================== End artisan ======================== //
+
+
+
+
+
+
+
+
+
+
+
 
 
 
