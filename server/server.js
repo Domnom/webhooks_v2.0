@@ -497,7 +497,7 @@ app.get('/client/api/docker/restart', function(req, res) {
 ~~~~~~~~~ */
 app.get('/client/api/git/pull', function(req, res) {
 
-	var gitPull = exec('cd ~/client_webapp_apibuilder && git pull --all');
+	var gitPull = exec('cd ~/client_webapp_apibuilder && git pull --all && cd public && bower install');
 		gitPull.stdout.on('data', function(data) {
 			console.log('stdout: ', data);
 		});
@@ -892,7 +892,20 @@ app.get('/ms/api/git/pull', function(req, res) {
 app.get('/ms/api/artisan/migrateandseed', function(req, res) {
 
 	var artisanMigrateAndSeed = exec('cd ~/microservice_api && php artisan migrate:refresh --seed');
+		artisanMigrateAndSeed.stdout.on('data', function(data){
+			console.log('stdout: ', data);
+		});
+		artisanMigrateAndSeed.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		artisanMigrateAndSeed.on('exit', function(data) {
+			console.log('Exited: ', data);
 
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
 });
 
 
@@ -970,7 +983,20 @@ app.get('/ms/wf/git/pull', function(req, res) {
 app.get('/ms/wf/artisan/migrateandseed', function(req, res) {
 
 	var artisanMigrateAndSeed = exec('cd ~/microservice_wf && php artisan migrate:refresh --seed');
+		artisanMigrateAndSeed.stdout.on('data', function(data){
+			console.log('stdout: ', data);
+		});
+		artisanMigrateAndSeed.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		artisanMigrateAndSeed.on('exit', function(data) {
+			console.log('Exited: ', data);
 
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
 });
 
 
@@ -1045,7 +1071,20 @@ app.get('/ms/ui/git/pull', function(req, res) {
 app.get('/ms/ui/artisan/migrateandseed', function(req, res) {
 
 	var artisanMigrateAndSeed = exec('cd ~/microservice_ui && php artisan migrate:refresh --seed');
+		artisanMigrateAndSeed.stdout.on('data', function(data){
+			console.log('stdout: ', data);
+		});
+		artisanMigrateAndSeed.stderr.on('data', function(data) {
+			console.log('stderr: ', data);
+		});
+		artisanMigrateAndSeed.on('exit', function(data) {
+			console.log('Exited: ', data);
 
+			res.status(200)
+			   .send({
+			   		data: data
+			   });
+		});
 });
 
 
